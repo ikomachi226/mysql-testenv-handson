@@ -10,12 +10,19 @@ Testcontainersは、テストコードからコンテナを起動し、テスト
 
 ## この実習で確認すること
 
-- PodmanのDocker API互換ソケット経由で、TestcontainersがMySQL公式イメージを起動できること
-- テストコードが`getJdbcUrl()`から取得した動的な接続先へ接続できること
-- 空の`labdb`で`todo`表を作成し、1行を書き込んで読み戻せること
-- `mvn test`を続けて2回実行しても両方成功すること
+この実習では、常設の開発用MySQLではなく、テストコードが起動したMySQLに対してSQLを実行します。
 
-最後の確認は、前回のテストの表や行に依存していないことを示します。
+テストは次の処理を行います。
+
+1. TestcontainersがPodman経由でMySQLコンテナを起動する。
+2. テストコードが動的に割り当てられた接続先へ接続する。
+3. `todo`表を作成し、`Testcontainers lab`という1行を追加する。
+4. 追加した行を`SELECT`し、値が一致することをJUnitで検証する。
+5. テストコードの終了時にコンテナを終了する。
+
+`mvn test`を続けて2回実行して、両方が成功することを確認します。
+
+これは、前回の実行で残った`todo`表やデータを使わずに、同じ結合テストを繰り返せることの確認です。
 
 このサンプルでは、Composeと同じOracle Container RegistryのMySQL Community Server 9.7イメージを使います。
 
@@ -26,7 +33,18 @@ export TESTCONTAINERS_RYUK_DISABLED=true
 mvn test
 ```
 
-成功時には、Mavenの最後に`BUILD SUCCESS`が表示されます。
+成功時には、`Tests run: 1`、`Failures: 0`、`Errors: 0`と`BUILD SUCCESS`が表示されます。
+
+テストコード自身の出力として、次の2行も表示されます。
+
+```text
+[OK] Testcontainers started MySQL: jdbc:mysql://...
+[OK] INSERT and SELECT verified: Testcontainers lab
+```
+
+1行目はテストコードがMySQLコンテナを起動したことを示します。
+
+2行目はテストコードが書き込んだデータを読み戻し、期待した値と一致したことを示します。
 
 続けて同じコマンドをもう一度実行します。
 
