@@ -39,6 +39,7 @@ podman compose exec mysql mysql -uroot -p"$MYSQL_ROOT_PASSWORD" labdb
 ```
 起動後は普通にSQLを実行できます。
 ```bash
+//SQL例
 SHOW TABLES;
 INSERT INTO todo(title) VALUES ('manual data');
 SELECT * FROM todo;
