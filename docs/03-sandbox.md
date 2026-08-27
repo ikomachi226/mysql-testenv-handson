@@ -88,6 +88,7 @@ MySQL Shellの終了コマンドは\quitです。
 詳細なコマンドは[`sandbox/cluster.js`](../sandbox/cluster.js)にあります。
 
 実行画面例
+
 <img width="669" height="374" alt="image" src="https://github.com/user-attachments/assets/6ba4a392-f63e-454f-ab3c-6a7fab5bed52" />
 
 <img width="1217" height="805" alt="image" src="https://github.com/user-attachments/assets/f0f20b2a-3e0b-4930-8c67-e1cd3238c6f1" />
