@@ -6,7 +6,7 @@
 
 ```bash
 git clone <REPOSITORY_URL>
-printf 'MYSQL_ROOT_PASSWORD=ChangeMe_OnlyForLab\nMYSQL_PORT=13306\n' > .env
+printf 'MYSQL_ROOT_PASSWORD= <PASSWORD>\nMYSQL_PORT=13306\n' > .env
 chmod 600 .env
 
 podman pull container-registry.oracle.com/mysql/community-server:9.7
