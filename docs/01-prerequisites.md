@@ -10,7 +10,7 @@ SSHで接続した後、PodmanとCompose互換コマンドを導入します。
 
 ```bash
 sudo dnf update -y
-sudo dnf install -y python3-pip //必要に応じてインストール
+sudo dnf install -y python3-pip
 sudo dnf install -y git curl unzip podman podman-docker podman-compose
 
 podman --version
