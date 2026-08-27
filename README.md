@@ -4,7 +4,7 @@ Docker Compose、MySQL Shell Sandbox、Testcontainersを使い分けるための
 
 OCI Compute上に3種類のMySQL検証環境を作ります。
 
-|目的|方法|実習ディレクトリ|
+|目的|方法|ディレクトリ|
 |---|---|---|
 |アプリケーションとMySQLを一緒に開発する|Compose|[`compose/`](compose/)|
 |複数MySQLとInnoDB Clusterを試す|MySQL Shell Sandbox|[`sandbox/`](sandbox/)|
