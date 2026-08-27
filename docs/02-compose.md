@@ -25,15 +25,11 @@ podman compose exec mysql mysql -uroot -p"$MYSQL_ROOT_PASSWORD" \
   -e "SELECT * FROM labdb.todo;"
 ```
 
+<img width="772" height="157" alt="image" src="https://github.com/user-attachments/assets/80a73142-09b3-4d4c-a559-bb2d5d47bb30" />
+
 `OCI lab`が1件表示されたら成功です。
 
 Composeファイルは3306を`127.0.0.1`へだけバインドします。
-
-ローカルPCから接続する場合は、SSHトンネルを使います。
-
-```bash
-ssh -i ~/.ssh/oci-lab.key -N -L 13306:127.0.0.1:13306 opc@<PUBLIC_IP>
-```
 
 初期化SQLは、データボリュームが空のときだけ実行されます。
 
