@@ -44,10 +44,11 @@ SHOW TABLES;
 INSERT INTO todo(title) VALUES ('manual data');
 SELECT * FROM todo;
 ```
-終了は exit です。手動で加えた変更はmysql-data volumeに残ります。
+終了コマンドは exit です。手動で加えた変更はmysql-data volumeに残ります。
 SQLを書き換えた後に初期状態へ戻したい場合は、以下を実行します。
 
 ```bash
 podman compose down -v
 podman compose up -d
 ```
+<img width="1000" height="834" alt="image" src="https://github.com/user-attachments/assets/c5adda06-e6ce-454f-bd7b-fc273a26e814" />
