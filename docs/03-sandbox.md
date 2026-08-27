@@ -34,7 +34,44 @@ cluster.status()
 
 `topology`に3インスタンスが`ONLINE`として表示されれば成功です。
 
-作成後は、各Sandboxを削除します。
+プライマリの停止と自動フェイルオーバーを確認する
+
+Sandboxの3310を強制停止します。
+
+これは障害を模擬する操作です。***本番環境のMySQL Serverに対して実行しないでください***
+
+```javascript
+dba.killSandboxInstance(3310)
+```
+
+生存している3320へ接続して、Clusterの状態を確認します。
+
+```javascript
+shell.connect('root@localhost:3320')
+var cluster = dba.getCluster()
+var status = cluster.status()
+print(JSON.stringify(status, null, 2))
+var newPrimary = status.defaultReplicaSet.primary
+print('New primary: ' + newPrimary)
+```
+
+`defaultReplicaSet.primary`が3310以外になり、3310が`MISSING`と表示されれば自動フェイルオーバーは成功です。
+
+新しいプライマリへ接続して、書き込みを続けられることを確認します。
+
+```javascript
+shell.connect('root@' + newPrimary)
+session.runSql("INSERT INTO labdb.cluster_note VALUES (2, 'written-after-failover') ON DUPLICATE KEY UPDATE note = VALUES(note)")
+session.runSql('SELECT * FROM labdb.cluster_note')
+```
+
+最後に元の3310を起動し、Clusterへ再参加したことを確認します。
+
+```javascript
+dba.startSandboxInstance(3310)
+cluster.status()
+
+テスト後は、各Sandboxを削除します。
 
 ```javascript
 dba.deleteSandboxInstance(3310)
