@@ -72,9 +72,13 @@ dba.startSandboxInstance(3310)
 cluster.status()
 ```
 
-テスト後は、各Sandboxを削除します。
+テスト後は、各Sandboxを停止・削除します。
 
 ```javascript
+dba.stopSandboxInstance(3310)
+dba.stopSandboxInstance(3320)
+dba.stopSandboxInstance(3330)
+
 dba.deleteSandboxInstance(3310)
 dba.deleteSandboxInstance(3320)
 dba.deleteSandboxInstance(3330)
