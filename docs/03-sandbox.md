@@ -70,6 +70,7 @@ session.runSql('SELECT * FROM labdb.cluster_note')
 ```javascript
 dba.startSandboxInstance(3310)
 cluster.status()
+```
 
 テスト後は、各Sandboxを削除します。
 
@@ -78,6 +79,7 @@ dba.deleteSandboxInstance(3310)
 dba.deleteSandboxInstance(3320)
 dba.deleteSandboxInstance(3330)
 ```
+MySQL Shellの終了コマンドは\quitです。
 
 詳細なコマンドは[`sandbox/cluster.js`](../sandbox/cluster.js)にあります。
 
