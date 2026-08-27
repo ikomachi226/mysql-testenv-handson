@@ -1,6 +1,6 @@
 # 事前準備
 
-Oracle Linux 9の検証用Computeを1台作成します。
+OCIにログインし、Oracle Linux 9の検証用Computeを1台作成します。(検証時にはVM.Standard.E5.Flex、1 OCPU、12GBメモリの環境を利用しました)
 
 NSGまたはSecurity Listでは、実習PCのIPアドレスからのTCP/22だけを許可します。
 
