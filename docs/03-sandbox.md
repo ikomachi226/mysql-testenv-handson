@@ -96,5 +96,6 @@ MySQL Shellの終了コマンドは\quitです。
 
 <img width="616" height="140" alt="image" src="https://github.com/user-attachments/assets/29e74341-4185-44dd-a557-00e0961a63f8" />
 
-<img width="401" height="256" alt="image" src="https://github.com/user-attachments/assets/fefd1961-dc9d-405e-9f62-eb1276e74e56" />
+<img width="402" height="289" alt="image" src="https://github.com/user-attachments/assets/bc24f5ac-0f77-4b03-8322-ab16b011bc77" />
+
 
