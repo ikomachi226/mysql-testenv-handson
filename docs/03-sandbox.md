@@ -9,7 +9,7 @@ MySQL Yum RepositoryのOracle Linux 9向けリリースRPMを取得し、MySQL S
 ```bash
 cd /tmp
 curl -LO https://repo.mysql.com/mysql97-community-release-el9.rpm
-# ダウンロードしたmysql97-community-release-*-el9.noarch.rpmを指定する
+# ダウンロードした9.7rpmを指定する
 sudo dnf install -y ./mysql97-community-release-el9.rpm
 sudo dnf install -y mysql-community-server mysql-shell
 which mysqld mysqlsh
