@@ -80,3 +80,19 @@ dba.deleteSandboxInstance(3330)
 ```
 
 詳細なコマンドは[`sandbox/cluster.js`](../sandbox/cluster.js)にあります。
+
+実行画面例
+<img width="669" height="374" alt="image" src="https://github.com/user-attachments/assets/6ba4a392-f63e-454f-ab3c-6a7fab5bed52" />
+
+<img width="1217" height="805" alt="image" src="https://github.com/user-attachments/assets/f0f20b2a-3e0b-4930-8c67-e1cd3238c6f1" />
+
+<img width="598" height="636" alt="image" src="https://github.com/user-attachments/assets/4ee75aa0-037b-4bf8-9206-2ae2521ee255" />
+
+<img width="1218" height="355" alt="image" src="https://github.com/user-attachments/assets/a85f2e91-fb13-47ca-8ef8-c749d59993d4" />
+
+<img width="729" height="191" alt="image" src="https://github.com/user-attachments/assets/6568e30a-ce82-42a1-bd84-6a28019d999b" />
+
+<img width="616" height="140" alt="image" src="https://github.com/user-attachments/assets/29e74341-4185-44dd-a557-00e0961a63f8" />
+
+<img width="401" height="256" alt="image" src="https://github.com/user-attachments/assets/fefd1961-dc9d-405e-9f62-eb1276e74e56" />
+
