@@ -33,7 +33,18 @@ Composeファイルは3306を`127.0.0.1`へだけバインドします。
 
 初期化SQL(01-schema.sql)は、データボリュームが空のときだけ実行されます。
 
-SQLを書き換えた後に初期化をやり直す場合は、実習用のvolumeだけを確認して削除します。
+SQLを自由に実行する場合は、SQLを指定せずに起動します。
+```bash
+podman compose exec mysql mysql -uroot -p"$MYSQL_ROOT_PASSWORD" labdb
+```
+起動後は普通にSQLを実行できます。
+```bash
+SHOW TABLES;
+INSERT INTO todo(title) VALUES ('manual data');
+SELECT * FROM todo;
+```
+終了は exit です。手動で加えた変更はmysql-data volumeに残ります。
+SQLを書き換えた後に初期状態へ戻したい場合は、以下を実行します。
 
 ```bash
 podman compose down -v
