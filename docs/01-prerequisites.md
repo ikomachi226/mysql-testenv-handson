@@ -2,7 +2,7 @@
 
 Oracle Linux 9の検証用Computeを1台作成します。
 
-NSGまたはSecurity Listでは、実習者のIPアドレスからのTCP/22だけを許可します。
+NSGまたはSecurity Listでは、実習PCのIPアドレスからのTCP/22だけを許可します。
 
 MySQLのClassic Protocol、X Protocol、Group Replicationのポートを外部公開しません。
 
