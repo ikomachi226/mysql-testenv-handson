@@ -27,4 +27,4 @@ export TESTCONTAINERS_RYUK_DISABLED=true
 
 この環境変数は、そのシェルでTestcontainersを実行する間だけ必要です。
 
-Docker Engineを組織標準として使う場合は、Docker ComposeとDocker APIを利用しても構いません。
+Docker Engineを使う場合は、Docker ComposeとDocker APIを利用しても構いません。
