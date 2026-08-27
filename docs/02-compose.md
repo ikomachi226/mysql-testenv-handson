@@ -6,8 +6,8 @@
 
 ```bash
 git clone <REPOSITORY_URL>
-cd mysql-oci-test-environments-workshop/compose
-cp .env.example .env
+printf 'MYSQL_ROOT_PASSWORD=ChangeMe_OnlyForLab\nMYSQL_PORT=13306\n' > .env
+chmod 600 .env
 
 podman pull container-registry.oracle.com/mysql/community-server:9.7
 podman images container-registry.oracle.com/mysql/community-server
