@@ -10,7 +10,6 @@ printf 'MYSQL_ROOT_PASSWORD=ChangeMe_OnlyForLab\nMYSQL_PORT=13306\n' > .env
 chmod 600 .env
 
 podman pull container-registry.oracle.com/mysql/community-server:9.7
-podman images container-registry.oracle.com/mysql/community-server
 ```
 
 `.env`の`MYSQL_ROOT_PASSWORD`を実習専用の値に変更します。
