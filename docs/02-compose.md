@@ -51,4 +51,5 @@ SQLを書き換えた後に初期状態へ戻したい場合は、以下を実�
 podman compose down -v
 podman compose up -d
 ```
+実行画面例
 <img width="1000" height="834" alt="image" src="https://github.com/user-attachments/assets/c5adda06-e6ce-454f-bd7b-fc273a26e814" />
