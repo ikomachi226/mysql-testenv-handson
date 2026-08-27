@@ -31,7 +31,7 @@ podman compose exec mysql mysql -uroot -p"$MYSQL_ROOT_PASSWORD" \
 
 Composeファイルは3306を`127.0.0.1`へだけバインドします。
 
-初期化SQLは、データボリュームが空のときだけ実行されます。
+初期化SQL(01-schema.sql)は、データボリュームが空のときだけ実行されます。
 
 SQLを書き換えた後に初期化をやり直す場合は、実習用のvolumeだけを確認して削除します。
 
