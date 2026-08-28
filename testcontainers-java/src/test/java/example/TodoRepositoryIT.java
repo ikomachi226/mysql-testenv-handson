@@ -5,6 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import java.sql.DriverManager;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.utility.DockerImageName;
+
+private static final DockerImageName MYSQL_97 =
+    DockerImageName
+        .parse("container-registry.oracle.com/mysql/community-server:9.7")
+        .asCompatibleSubstituteFor("mysql");
 
 class TodoRepositoryIT {
   @Test
