@@ -46,8 +46,10 @@ class TodoRepositoryIT {
               System.out.println("[OK] INSERT todo: " + insertedRows + " row");
 
               try (var result = statement.executeQuery("""
-                                                     SELECT title FROM todo WHERE id = 1
+                                                     SELECT id, title FROM todo WHERE id = 1
                                                      """)) {
+                   assertTrue(result.next());
+                  
                   int id = result.getInt("id");
                   String title = result.getString("title");
 
