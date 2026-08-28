@@ -6,6 +6,11 @@
 var primaryPort = 3310
 var secondaryPorts = [3320, 3330]
 var clusterName = 'ociLabCluster'
+// `which mysqld`で確認したパスに変更します。
+// MySQL Shell 9.4以降では、mysqldPathでSandboxに使うServerを選べます。
+var sandboxOptions = {
+  mysqldPath: '/usr/sbin/mysqld'
+}
 
 function connectTo(port) {
   shell.connect('root@localhost:' + port)
@@ -19,9 +24,9 @@ function printStatus() {
 }
 
 function createLabCluster() {
-  dba.deploySandboxInstance(primaryPort)
-  dba.deploySandboxInstance(secondaryPorts[0])
-  dba.deploySandboxInstance(secondaryPorts[1])
+  dba.deploySandboxInstance(primaryPort, sandboxOptions)
+  dba.deploySandboxInstance(secondaryPorts[0], sandboxOptions)
+  dba.deploySandboxInstance(secondaryPorts[1], sandboxOptions)
 
   connectTo(primaryPort)
   var cluster = dba.createCluster(clusterName)
