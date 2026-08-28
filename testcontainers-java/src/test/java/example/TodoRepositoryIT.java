@@ -15,7 +15,7 @@ private static final DockerImageName MYSQL_97 =
 class TodoRepositoryIT {
   @Test
   void connectsToFreshMySql() {
-    try (MySQLContainer<?> mysql = new MySQLContainer<>("mysql:8.0.36")
+    try (MySQLContainer<?> mysql = new MySQLContainer<>(MYSQL_97)
         .withDatabaseName("labdb")
         .withUsername("test")
         .withPassword("test")) {
