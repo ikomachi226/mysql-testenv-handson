@@ -9,6 +9,6 @@ podman compose down -v
 
 SandboxはMySQL Shellから`dba.deleteSandboxInstance()`で削除します。
 
-検証用Computeを残す理由がなければ、OCI ConsoleからTerminateします。
+検証用Computeを残す理由がなければ、OCIコンソールで終了します。
 
 対象を確認せずに、他プロジェクトのvolumeやSandboxを削除しないでください。
