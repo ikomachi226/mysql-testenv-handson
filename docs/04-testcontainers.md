@@ -114,7 +114,10 @@ mvn -Dtest=TodoRepositoryIT test
    podman pull container-registry.oracle.com/mysql/community-server:9.7
    ```
    
-CIへ移す場合は、ランナーがDocker API互換ランタイムとコンテナレジストリへ到達できることを確認してください。
+GitHub ActionsなどのCIでこのテストを自動実行する場合は、テストを動かすマシンで次の2点の確認が必要です。
+
+1. DockerまたはPodmanでコンテナを起動できること
+2. Oracle Container RegistryからMySQLイメージを取得できること
 
 ## 参考資料
 
