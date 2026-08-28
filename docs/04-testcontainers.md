@@ -59,3 +59,7 @@ mvn test
 コンテナ起動やDB接続に失敗した場合は、Podmanソケットの場所、Podmanサービスの起動状態、Oracle Container Registryへの到達性を確認します。
 
 CIへ移す場合は、ランナーがDocker API互換ランタイムとコンテナレジストリへ到達できることを確認してください。
+
+※SLF4J: Failed to load ... という警告メッセージが出力される場合がありますが、これはログ実装が未設定であることを示す警告です。
+
+BUILD SUCCESS が出力されていればテストは成功しています。
