@@ -1,6 +1,8 @@
 package example;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.sql.DriverManager;
 import org.junit.jupiter.api.Test;
@@ -21,12 +23,40 @@ class TodoRepositoryIT {
         .withPassword("test")) {
       mysql.start();
       assertDoesNotThrow(() -> {
-        try (var connection = DriverManager.getConnection(
+          System.out.println("[INFO] MySQL image: " + mysql.getDockerImageName());
+
+          try (var connection = DriverManager.getConnection(
                 mysql.getJdbcUrl(), mysql.getUsername(), mysql.getPassword());
             var statement = connection.createStatement()) {
-          statement.execute("CREATE TABLE todo(id INT PRIMARY KEY)");
-        }
-      });
+                try (var result = statement.executeQuery("SELECT VERSION()")) {
+                    result.next();
+                    System.out.println("[OK] MySQL Server version: " + result.getString(1));
+                }
+              statement.execute("""
+                              CREATE TABLE todo(
+                              id INT PRIMARY KEY,
+                              title VARCHAR(100) NOT NULL)
+                              """);
+              System.out.println("[OK] CREATE TABLE todo");
+
+              int insertedRows = statement.executeUpdate("""
+                                    INSERT INTO todo(id, title)
+                                    VALUES (1, 'Testcontainers lab')
+                                    """);
+              System.out.println("[OK] INSERT todo: " + insertedRows + " row");
+
+              try (var result = statement.executeQuery("""
+                                                     SELECT title FROM todo WHERE id = 1
+                                                     """)) {
+                  int id = result.getInt("id");
+                  String title = result.getString("title");
+
+                  System.out.println("[OK] SELECT todo: id=" + id + ", title=" + title);
+                  assertEquals(1, id);
+                  assertEquals("Testcontainers lab", title);
+              }
+            }
+        });
     }
   }
 }
