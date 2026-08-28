@@ -9,21 +9,52 @@ MySQL Yum RepositoryのOracle Linux 9向けリリースRPMを取得し、MySQL S
 ```bash
 cd /tmp
 curl -LO https://repo.mysql.com/mysql97-community-release-el9.rpm
-// ダウンロードした9.7rpmを指定する
 sudo dnf install -y ./mysql97-community-release-el9.rpm
 sudo dnf install -y mysql-community-server mysql-shell
 which mysqld mysqlsh
 mysqlsh --version
 ```
 
-9.7系列が有効であることを確認してから、3つのSandboxを作成します。
+## Sandboxで使うMySQL Serverのバージョンを選ぶ
+
+SandboxのMySQL Serverバージョンは、MySQL Shell自体のバージョンではなく、Sandbox作成に使う`mysqld`バイナリで決まります。
+
+MySQL Shell 9.4以降では、`mysqldPath`オプションに`mysqld`本体へのパス、またはMySQLのインストールルートを指定できます。
+
+試したいMySQL Serverバージョンのバイナリは、あらかじめホストにインストールしておきます。
+
+SandboxがMySQL Serverをダウンロードするわけではありません。
+
+まず、使用する`mysqld`のパスを確認します。
+
+```bash
+which mysqld
+mysqld --version
+```
+
+このハンズオンで導入したMySQL 9.7を使う例は次のとおりです。
 
 ```javascript
-// MySQL ShellをJavaScriptモードで起動
-mysqlsh --js
-dba.deploySandboxInstance(3310)
-dba.deploySandboxInstance(3320)
-dba.deploySandboxInstance(3330)
+// mysqlsh --js
+dba.deploySandboxInstance(
+  3310,
+  { mysqldPath: '/usr/sbin/mysqld' }
+)
+```
+
+`/opt/mysql-8.4/bin/mysqld`や`/opt/mysql-9.7/bin/mysqld`のように複数のServerバイナリを用意していれば、`mysqldPath`を切り替えることでSandboxのServerバージョンを選べます。
+
+MySQL Shell 9.7はMySQL 8.0以降のGA版との利用が推奨されています。
+
+ここでは、確認した`mysqld`のパスを使って3つのSandboxを作成します。
+
+```javascript
+// mysqlsh --js
+var sandboxOptions = { mysqldPath: '/usr/sbin/mysqld' }
+
+dba.deploySandboxInstance(3310, sandboxOptions)
+dba.deploySandboxInstance(3320, sandboxOptions)
+dba.deploySandboxInstance(3330, sandboxOptions)
 
 shell.connect('root@localhost:3310')
 var cluster = dba.createCluster('ociLabCluster')
@@ -34,11 +65,34 @@ cluster.status()
 
 `topology`に3インスタンスが`ONLINE`として表示されれば成功です。
 
+## 更新がセカンダリへ反映されることを確認する
+
+この時点では、3310がプライマリです。
+
+3310へ接続したMySQL Shellで、テスト用の表と1行を作成します。
+
+```javascript
+session.runSql('CREATE DATABASE IF NOT EXISTS labdb')
+session.runSql('CREATE TABLE IF NOT EXISTS labdb.cluster_note (id INT PRIMARY KEY, note VARCHAR(100))')
+session.runSql("INSERT INTO labdb.cluster_note VALUES (1, 'written-on-primary') ON DUPLICATE KEY UPDATE note = VALUES(note)")
+```
+
+次にセカンダリの3320へ接続して、同じ行を読めることを確認します。
+
+```javascript
+shell.connect('root@localhost:3320')
+session.runSql('SELECT * FROM labdb.cluster_note')
+```
+
+3310で書き込んだ`written-on-primary`が表示されれば、Group Replicationによる更新反映を確認できます。
+
 ## プライマリの停止と自動フェイルオーバーを確認する
 
 Sandboxの3310を強制停止します。
 
-これは障害を模擬する操作です。***本番環境のMySQL Serverに対して実行しないでください***
+これは障害を模擬する操作です。
+
+本番環境のMySQL Serverに対して実行しないでください。
 
 ```javascript
 dba.killSandboxInstance(3310)
@@ -72,7 +126,9 @@ dba.startSandboxInstance(3310)
 cluster.status()
 ```
 
-テスト後は、各Sandboxを停止・削除します。
+Sandboxを削除する前に、各インスタンスを停止します。
+
+`dba.deleteSandboxInstance()`は、実行中のSandboxを削除しません。
 
 ```javascript
 dba.stopSandboxInstance(3310)
@@ -83,24 +139,10 @@ dba.deleteSandboxInstance(3310)
 dba.deleteSandboxInstance(3320)
 dba.deleteSandboxInstance(3330)
 ```
-MySQL Shellの終了コマンドは\quitです。
 
 詳細なコマンドは[`sandbox/cluster.js`](../sandbox/cluster.js)にあります。
 
-実行画面例
+## 参考資料
 
-<img width="669" height="374" alt="image" src="https://github.com/user-attachments/assets/6ba4a392-f63e-454f-ab3c-6a7fab5bed52" />
-
-<img width="1217" height="805" alt="image" src="https://github.com/user-attachments/assets/f0f20b2a-3e0b-4930-8c67-e1cd3238c6f1" />
-
-<img width="598" height="636" alt="image" src="https://github.com/user-attachments/assets/4ee75aa0-037b-4bf8-9206-2ae2521ee255" />
-
-<img width="1218" height="355" alt="image" src="https://github.com/user-attachments/assets/a85f2e91-fb13-47ca-8ef8-c749d59993d4" />
-
-<img width="729" height="191" alt="image" src="https://github.com/user-attachments/assets/6568e30a-ce82-42a1-bd84-6a28019d999b" />
-
-<img width="616" height="140" alt="image" src="https://github.com/user-attachments/assets/29e74341-4185-44dd-a557-00e0961a63f8" />
-
-<img width="402" height="289" alt="image" src="https://github.com/user-attachments/assets/bc24f5ac-0f77-4b03-8322-ab16b011bc77" />
-
-
+- [Deploying Sandbox Instances](https://dev.mysql.com/doc/mysql-shell/9.7/en/deploy-sandbox-instances.html)
+- [Changes in MySQL Shell 9.4.0](https://dev.mysql.com/doc/relnotes/mysql-shell/26.7/en/news-9-4-0.html)
