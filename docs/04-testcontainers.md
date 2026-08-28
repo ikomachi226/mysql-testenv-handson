@@ -94,8 +94,26 @@ mvn -Dtest=TodoRepositoryIT test
 
 テストコードは[`TodoRepositoryIT.java`](../testcontainers-java/src/test/java/example/TodoRepositoryIT.java)です。
 
-コンテナ起動やDB接続に失敗した場合は、Podmanソケットの場所、Podmanサービスの起動状態、Oracle Container Registryへの到達性を確認します。
+コンテナ起動やDB接続に失敗した場合は、以下の通り Podmanソケットの場所、Podmanサービスの起動状態、Oracle Container Registryへの到達性を確認します。
 
+1. `DOCKER_HOST`がPodmanのソケットを指しているか確認します。
+
+   ```bash
+   echo "$DOCKER_HOST"
+   ```
+   
+2. PodmanのAPIソケットが利用できるか確認します。
+
+   ```bash
+   systemctl --user status podman.socket
+   ```
+
+3. MySQL 9.7イメージを取得できるか確認します。
+   
+   ```bash
+   podman pull container-registry.oracle.com/mysql/community-server:9.7
+   ```
+   
 CIへ移す場合は、ランナーがDocker API互換ランタイムとコンテナレジストリへ到達できることを確認してください。
 
 ## 参考資料
